@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Integration {
   public static final String DOMAIN = "localhost";
 
-  @SneakyThrows
+
    public Map<String, String> initApp(String xmlString) {
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()
@@ -105,7 +105,7 @@ public class Integration {
       return inputStream;
     }
   }
-  @SneakyThrows
+
   public void closeCes(String closeLink, String xmlString, String caseId) {
     HttpClient client = HttpClient.newHttpClient();
     HttpRequest request = HttpRequest.newBuilder()

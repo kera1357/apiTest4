@@ -9,10 +9,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import mmm.raf.testswithoutintegration.Integration;
-import xml.CodeDx;
-import xml.CodeXml;
-import xml.Crs;
+import org.example.xml.CodeDx;
+import org.example.xml.CodeXml;
+import org.example.xml.Crs;
+
 
 public class Converter {
 

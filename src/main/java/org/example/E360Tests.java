@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.SneakyThrows;
-import mmm.raf.testswithoutintegration.Integration;
 import org.junit.jupiter.api.Assertions;
 
 public class E360Tests {
@@ -34,7 +33,7 @@ public class E360Tests {
 
 
 
-  @SneakyThrows
+
   private static UserinterfacesApi test_auto_coding() {
 
 
