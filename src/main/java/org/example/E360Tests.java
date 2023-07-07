@@ -28,28 +28,23 @@ public class E360Tests {
 
     //test_delete_annotation_depended(userinterfacesApi);
 
-
   }
 
 
-
-
+  @SneakyThrows
   private static UserinterfacesApi test_auto_coding() {
-
-
-
     //==== given =========
-    String episodeId = "cc_at50";
+    String episodeId = "cc_at52";
     Integration integration = new Integration();
     ArrayList<String> hl7Array = integration.readHl7File("caseCleaning1.hl7", episodeId);
     String path = "D:\\testProjects\\TestsWithoutIntegration\\src\\main\\resources\\tempCC.hl7";
     Files.write(Path.of(path),hl7Array);
+
     Terminal terminal = new Terminal();
     terminal.runImportAndAutoCoding(path,episodeId);
     System.out.println("check assertions");
 
     UserinterfacesApi userinterfacesApi = new UserinterfacesApi(episodeId);
-
 
 
     WlaApi wlaApi = new WlaApi();
