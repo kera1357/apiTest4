@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<CRS>
+  <PERSON>
+    <BDT>1985-03-20</BDT>
+    <AGEY>35</AGEY>
+    <AGED>13105</AGED>
+    <GENDER>2</GENDER>
+    <HISTORYID>P1234</HISTORYID>
+    <FIRSTNAME>Carmen</FIRSTNAME>
+    <LASTNAME>Gomez</LASTNAME>
+  </PERSON>
+  <ENCOUNTER>
+    <EPISODEID>1943</EPISODEID>
+    <PATIENTTYPE>2</PATIENTTYPE>
+    <DSP>1</DSP>
+    <ADT>2021-02-04</ADT>
+    <DDT>2021-02-10</DDT>
+    <LOS>6</LOS>
+    <DMV>10</DMV>
+    <PROVISIONAL>0</PROVISIONAL>
+    <MEMO></MEMO>
+    <CLAIM>
+      <I10DXP>
+        <VALUE>I44.69</VALUE>
+        <TEXT>Otros tipos de bloqueo fascicular</TEXT>
+        <POA>Y</POA>
+        <LSI></LSI>
+        <LRM></LRM>
+        <AFFECT></AFFECT>
+        <EC>0</EC>
+        <PEC>0</PEC>
+      </I10DXP>
+      <I10DX>
+        <VALUE>J44.1</VALUE>
+        <TEXT>Enfermedad pulmonar obstructiva crónica con exacerbación (aguda)</TEXT>
+        <POA>Y</POA>
+        <LSI></LSI>
+        <LRM></LRM>
+        <AFFECT></AFFECT>
+        <EC>0</EC>
+        <PEC>0</PEC>
+      </I10DX>
+      <I10DX>
+        <VALUE>R09.3</VALUE>
+        <TEXT>Esputo anómalo</TEXT>
+        <POA>N</POA>
+        <LSI></LSI>
+        <LRM></LRM>
+        <AFFECT></AFFECT>
+        <EC>0</EC>
+        <PEC>0</PEC>
+      </I10DX>
+      <I10PRP>
+        <VALUE>0BTG0ZZ</VALUE>
+        <TEXT>Resección de lóbulo superior pulmón, izquierdo, abordaje abierto</TEXT>
+        <AFFECT></AFFECT>
+        <EXTERNAL>
+          <STATUS>C</STATUS>
+          <VALUE></VALUE>
+        </EXTERNAL>
+        <DATE></DATE>
+        <PHYSICIAN>
+          <CODE>physician-1</CODE>
+          <DESCRIPTION>description-1</DESCRIPTION>
+        </PHYSICIAN>
+        <DEPARTMENT>
+          <CODE>MIN</CODE>
+          <DESCRIPTION>Medicina Interna</DESCRIPTION>
+        </DEPARTMENT>
+        <PROCEDURE_TYPE>ProcType1</PROCEDURE_TYPE>
+        <ANESTHESIA_TYPE>AntType1</ANESTHESIA_TYPE>
+        <REINTERVENTION>S</REINTERVENTION>
+      </I10PRP>
+      <I10PR>
+        <VALUE>0DJD8ZZ</VALUE>
+        <TEXT>Inspección de tracto intestinal inferior, abordaje orificio natural o artificial, endoscópico</TEXT>
+        <AFFECT></AFFECT>
+        <EXTERNAL>
+          <STATUS>E</STATUS>
+          <VALUE>HOSPITAL 1</VALUE>
+        </EXTERNAL>
+        <DATE>2021-01-31T14:30:00</DATE>
+        <PHYSICIAN>
+          <CODE></CODE>
+          <DESCRIPTION></DESCRIPTION>
+        </PHYSICIAN>
+        <DEPARTMENT>
+          <CODE></CODE>
+          <DESCRIPTION></DESCRIPTION>
+        </DEPARTMENT>
+        <PROCEDURE_TYPE></PROCEDURE_TYPE>
+        <ANESTHESIA_TYPE></ANESTHESIA_TYPE>
+        <REINTERVENTION></REINTERVENTION>
+      </I10PR>
+      <I10PR>
+        <VALUE>0DJD8ZZ</VALUE>
+        <TEXT>Inspección de tracto intestinal inferior, abordaje orificio natural o artificial, endoscópico</TEXT>
+        <AFFECT></AFFECT>
+        <EXTERNAL>
+          <STATUS>E</STATUS>
+          <VALUE></VALUE>
+        </EXTERNAL>
+        <DATE>2021-02-01T14:30:00</DATE>
+        <PHYSICIAN>
+          <CODE></CODE>
+          <DESCRIPTION></DESCRIPTION>
+        </PHYSICIAN>
+        <DEPARTMENT>
+          <CODE></CODE>
+          <DESCRIPTION></DESCRIPTION>
+        </DEPARTMENT>
+        <PROCEDURE_TYPE></PROCEDURE_TYPE>
+        <ANESTHESIA_TYPE></ANESTHESIA_TYPE>
+        <REINTERVENTION></REINTERVENTION>
+      </I10PR>
+      <DRG codeset="I10" type="">
+        <VALUE></VALUE>
+        <TEXT></TEXT>
+        <WGTLIN>
+          <DRGWT>-1</DRGWT>
+          <ALOS>-1</ALOS>
+          <LOWT>-1</LOWT>
+          <HIGHT>-1</HIGHT>
+        </WGTLIN>
+        <MS></MS>
+        <MDC>
+          <VALUE>-1</VALUE>
+          <TEXT></TEXT>
+        </MDC>
+        <CLMSOI>
+          <VALUE></VALUE>
+          <TEXT>Valor desconocido</TEXT>
+        </CLMSOI>
+        <CLMROM>
+          <VALUE></VALUE>
+          <TEXT>Valor desconocido</TEXT>
+        </CLMROM>
+        <VSN>
+          <SCHEME>APR</SCHEME>
+          <VERSION>360</VERSION>
+        </VSN>
+      </DRG>
+      <DRG codeset="I10" type="ADT">
+        <VALUE></VALUE>
+        <TEXT></TEXT>
+        <WGTLIN>
+          <DRGWT>-1</DRGWT>
+          <ALOS>-1</ALOS>
+          <LOWT>-1</LOWT>
+          <HIGHT>-1</HIGHT>
+        </WGTLIN>
+        <MS></MS>
+        <MDC>
+          <VALUE>-1</VALUE>
+          <TEXT></TEXT>
+        </MDC>
+        <CLMSOI>
+          <VALUE></VALUE>
+          <TEXT>Valor desconocido</TEXT>
+        </CLMSOI>
+        <CLMROM>
+          <VALUE></VALUE>
+          <TEXT>Valor desconocido</TEXT>
+        </CLMROM>
+        <VSN>
+          <SCHEME>APR</SCHEME>
+          <VERSION>360</VERSION>
+        </VSN>
+      </DRG>
+    </CLAIM>
+  </ENCOUNTER>
+</CRS>

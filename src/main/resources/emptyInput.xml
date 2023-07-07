@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CRS>
+  <CNTRL>
+    <PRD>10
+    </PRD> <!-- 10: CES, 20: Doccoder, 11: CES ohne grouper, 21: doccoder ohne grouper, 9: training -->
+    <TENANT>STANDARD</TENANT>
+    <ALLOW_PROVISIONAL>1</ALLOW_PROVISIONAL>
+    <ALLOW_MEMO>1</ALLOW_MEMO>
+    <ICD9OUT>1</ICD9OUT>
+    <USER>
+      <NAME>demo</NAME>
+    </USER>
+  </CNTRL>
+  <PERSON>
+    <FIRSTNAME>Carmen</FIRSTNAME>
+    <LASTNAME>Gomez</LASTNAME>
+    <GENDER>2</GENDER>
+    <HISTORYID>P1234</HISTORYID>
+    <BDT>1985-03-20</BDT>
+  </PERSON>
+  <ENCOUNTER>
+    <EPISODEID>placeHolder</EPISODEID>
+    <PATIENTTYPE>2</PATIENTTYPE>
+    <DSP>1</DSP>
+    <ADT>2022-02-04</ADT>
+    <DDT>2022-02-10</DDT>
+    <DMV>10</DMV>
+    <CLAIM>
+
+    </CLAIM>
+  </ENCOUNTER>
+</CRS>

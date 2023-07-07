@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CRS>
+
+  <CNTRL>
+    <PRD>20</PRD>
+    <TENANT>STANDARD</TENANT>
+    <ALLOW_PROVISIONAL>1</ALLOW_PROVISIONAL>
+    <ALLOW_MEMO>1</ALLOW_MEMO>
+    <GPRP>
+      <SCHEME>APR</SCHEME>
+      <VALUE>360</VALUE>
+    </GPRP>
+    <USER>
+      <NAME>demo</NAME>
+    </USER>
+    <PASSWORD>Demo</PASSWORD>
+  </CNTRL>
+
+  <PERSON>
+    <FIRSTNAME>name</FIRSTNAME>
+    <LASTNAME>surname</LASTNAME>
+    <GENDER>2</GENDER>
+    <HISTORYID>1234</HISTORYID>
+    <BDT>1985-03-20</BDT>
+  </PERSON>
+
+  <ENCOUNTER>
+    <EPISODEID>placeHolder</EPISODEID>
+    <PATIENTTYPE>2</PATIENTTYPE>
+    <DSP>1</DSP>
+    <ADT>2022-09-09</ADT>
+    <DDT>2022-10-10</DDT>
+    <DMV></DMV>
+    <WGT></WGT>
+
+    <CLAIM>
+
+
+    </CLAIM>
+
+  </ENCOUNTER>
+</CRS>

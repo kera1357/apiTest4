@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CRS>
+  <CNTRL>
+    <PRD>20</PRD>
+    <REDIRECTLINK>http://localhost:8085/wla/episodes?s=4115&amp;exchangeId=54e47c36-1715-4e39-a31a-e1a6089c24d1&amp;ps=20&amp;pi=0</REDIRECTLINK>
+    <TENANT>standard</TENANT>
+    <ALLOW_PROVISIONAL>1</ALLOW_PROVISIONAL>
+    <ALLOW_MEMO>1</ALLOW_MEMO>
+    <ICD9OUT>1</ICD9OUT>
+    <USER>
+      <NAME>demo</NAME>
+    </USER>
+    <VECTOR>pAZ1uXwP/91w6hzFNvUirA==</VECTOR>
+    <TOKEN>uuQQiLSg4+EG/i+ZLUfk8A==</TOKEN>
+  </CNTRL>
+  <PERSON>
+    <FIRSTNAME>Thomas</FIRSTNAME>
+    <LASTNAME>Tom</LASTNAME>
+    <GENDER>1</GENDER>
+    <HISTORYID>8060</HISTORYID>
+    <BDT>1984-09-10</BDT>
+  </PERSON>
+  <ENCOUNTER>
+    <EPISODEID>8060</EPISODEID>
+    <PATIENTTYPE>3</PATIENTTYPE>
+    <DSP>1</DSP>
+    <ADT>2020-08-31</ADT>
+    <DDT>2021-04-08</DDT>
+    <DMV>0</DMV>
+    <MEMO/>
+    <CLAIM />
+  </ENCOUNTER>
+</CRS>

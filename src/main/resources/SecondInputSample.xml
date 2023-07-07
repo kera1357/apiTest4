@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CRS>
+
+  <CNTRL>
+
+    <PRD>10
+    </PRD> <!-- 10: CES, 20: Doccoder, 11: CES ohne grouper, 21: doccoder ohne grouper, 9: training -->
+
+    <TENANT>STANDARD</TENANT>
+
+    <ALLOW_PROVISIONAL>1</ALLOW_PROVISIONAL>
+
+    <ALLOW_MEMO>1</ALLOW_MEMO>
+
+    <ICD9OUT>1</ICD9OUT>
+
+    <GPRP>
+
+      <SCHEME>AP</SCHEME>
+
+      <VALUE>270</VALUE>
+
+    </GPRP>
+
+    <USER>
+
+      <NAME>demo</NAME>
+
+    </USER>
+
+  </CNTRL>
+
+  <PERSON>
+
+    <FIRSTNAME>Carmen</FIRSTNAME>
+
+    <LASTNAME>Gomez</LASTNAME>
+
+    <GENDER>2</GENDER>
+
+    <HISTORYID>P1234</HISTORYID>
+
+    <BDT>1985-03-20</BDT>
+
+  </PERSON>
+
+  <ENCOUNTER>
+
+    <EPISODEID>1943</EPISODEID>
+
+    <PATIENTTYPE>2</PATIENTTYPE>
+
+    <DSP>10</DSP>
+
+    <ADT>2020-02-04</ADT>
+
+    <DDT>2020-02-10</DDT>
+
+    <DMV>10</DMV>
+
+    <CLAIM>
+
+      <I10DXP>
+
+        <VALUE>I44.69</VALUE>
+
+      </I10DXP>
+
+      <I10DX>
+
+        <VALUE>J44.1</VALUE>
+
+      </I10DX>
+
+      <I10DX>
+
+        <VALUE>R09.3</VALUE>
+
+        <POA>N</POA>
+
+      </I10DX>
+
+      <I10PR>
+
+        <VALUE>0DJD8ZZ</VALUE>
+
+        <DATE>2018-01-31T14:30</DATE>
+
+        <EXTERNAL>
+
+          <STATUS>E</STATUS>
+
+          <VALUE>HOSPITAL 1</VALUE>
+
+        </EXTERNAL>
+
+      </I10PR>
+
+      <I10PR>
+
+        <VALUE>0DJD8ZZ</VALUE>
+
+        <DATE>2018-02-01T14:30</DATE>
+
+        <EXTERNAL>
+
+          <STATUS>E</STATUS>
+
+          <VALUE/>
+
+        </EXTERNAL>
+
+      </I10PR>
+
+      <I10PRP>
+
+        <VALUE>0BTG0ZZ</VALUE>
+
+        <PHYSICIAN>
+
+          <CODE>physician-1</CODE>
+
+          <DESCRIPTION>description-1</DESCRIPTION>
+
+        </PHYSICIAN>
+
+        <DEPARTMENT>
+
+          <CODE>MIN</CODE>
+
+          <DESCRIPTION>Medicina Interna</DESCRIPTION>
+
+        </DEPARTMENT>
+
+        <PROCEDURE_TYPE>ProcType1</PROCEDURE_TYPE>
+
+        <ANESTHESIA_TYPE>AntType1</ANESTHESIA_TYPE>
+
+        <REINTERVENTION>S</REINTERVENTION>
+
+      </I10PRP>
+
+    </CLAIM>
+
+  </ENCOUNTER>
+
+</CRS>
