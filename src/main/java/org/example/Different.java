@@ -30,7 +30,7 @@ public class Different {
 //    List<List<String>> inputRaw = readCsvFile();
 //    ArrayList<String> input = transformInput2(inputRaw);
 
-    //test_response_on_search(literals);
+    test_response_on_search(csvBeans);
 
 
   }
@@ -93,24 +93,34 @@ public class Different {
   }
 
 
-  private void test_response_on_search(ArrayList<String> literals) {
+  private void test_response_on_search(List<CsvBean> csvBean) {
     //open app
-    UserinterfacesApi userinterfacesApi = getUserinterfacesApi("input.xml");
-    String responseFromAdd = userinterfacesApi.getCurrentState();
-    try {
-      for (String literal : literals) {
-        System.out.println("executing: " +  literal);
-        String response = userinterfacesApi.searchForLiteral(literal);
-        String cleanInputPath = "$.inputPair.cleanInput";
-        String cleanInput =  JsonPath.read(response, cleanInputPath);
-        System.out.println(cleanInput);
-        String codesPath = "$.codes[*].code";
-        List<String> codes =  JsonPath.read(response, codesPath);
-        System.out.println(codes.toString());
+
+      for (CsvBean record : csvBean) {
+        try {
+          System.out.println("executing: " +  record.getLiteral());
+          if(record.getLiteral().equals("APP")) {
+            System.out.println();
+          }
+          MetaData metadata = record.metadata;
+          String fileName = chooseInputFile(metadata);
+          System.out.println("fileName: " +  fileName);
+          UserinterfacesApi userinterfacesApi = getUserinterfacesApi(fileName);
+          String responseFromAdd = userinterfacesApi.getCurrentState();
+          String response = userinterfacesApi.searchForLiteral(record.getLiteral());
+          String cleanInputPath = "$.inputPair.cleanInput";
+          String cleanInput =  JsonPath.read(response, cleanInputPath);
+          System.out.println(cleanInput);
+          String codesPath = "$.codes[*].code";
+          List<String> codes =  JsonPath.read(response, codesPath);
+          System.out.println(codes.toString());
+          userinterfacesApi.closeWithCancel();
+
+        } catch (PathNotFoundException e) {
+          System.out.println(e);
+        }
       }
-    } catch (PathNotFoundException e) {
-      System.out.println(e);
-    }
+
 
 
 
@@ -145,33 +155,33 @@ public class Different {
   /*
   Desired input format: sorted metadata; literal; results;
    */
-  private ArrayList<String> transformInput(ArrayList<String> literals) {
-    ArrayList<String> literalsWithoutUnderscore = new ArrayList<>();
-
-    for (String literal : literals) {
-      String[] split = StringUtils.split(literal);
-      ArrayList<String> strList = new ArrayList<String>(Arrays.asList(split));
-      strList.remove(strList.size()-1); //remove some trash
-      if(strList.get(0).contains("_")) { //extract meda data
-        String metaDataCandidate = strList.get(0);
-        if(metaDataCandidate.isEmpty()) {
-          metaDataCandidate = "_Age_adult";
-        }
-        //boolean b = Stream.of(MetaData.values()).anyMatch(v -> v.name().equals(metaDataCandidate));
-        String fileName = chooseInputFile(metaDataCandidate);
-//        Integration integration1 = new Integration();
-//        integration.readXmlFile(fileName);
-        strList.remove(0);
-        String literalClean = strList.stream()
-            .collect(Collectors.joining(" "));
-      }
-//    List<String> literalWithoutUnderscore = strList.stream().filter(w -> !w.contains("_")).toList();
-//    String commaSeparated = literalWithoutUnderscore.stream()
-//        .collect(Collectors.joining(" "));
-//    literalsWithoutUnderscore.add(commaSeparated);
-    }
-    return literalsWithoutUnderscore;
-  }
+//  private ArrayList<String> transformInput(ArrayList<String> literals) {
+//    ArrayList<String> literalsWithoutUnderscore = new ArrayList<>();
+//
+//    for (String literal : literals) {
+//      String[] split = StringUtils.split(literal);
+//      ArrayList<String> strList = new ArrayList<String>(Arrays.asList(split));
+//      strList.remove(strList.size()-1); //remove some trash
+//      if(strList.get(0).contains("_")) { //extract meda data
+//        String metaDataCandidate = strList.get(0);
+//        if(metaDataCandidate.isEmpty()) {
+//          metaDataCandidate = "_Age_adult";
+//        }
+//        //boolean b = Stream.of(MetaData.values()).anyMatch(v -> v.name().equals(metaDataCandidate));
+//        String fileName = chooseInputFile(metaDataCandidate);
+////        Integration integration1 = new Integration();
+////        integration.readXmlFile(fileName);
+//        strList.remove(0);
+//        String literalClean = strList.stream()
+//            .collect(Collectors.joining(" "));
+//      }
+////    List<String> literalWithoutUnderscore = strList.stream().filter(w -> !w.contains("_")).toList();
+////    String commaSeparated = literalWithoutUnderscore.stream()
+////        .collect(Collectors.joining(" "));
+////    literalsWithoutUnderscore.add(commaSeparated);
+//    }
+//    return literalsWithoutUnderscore;
+//  }
   private ArrayList<String> transformInput2(List<List<String>> inputRaw) {
     List<List<String>> inputFormatted = new ArrayList<>();
     for (List<String> line : inputRaw) {
@@ -200,13 +210,15 @@ public class Different {
     return null;
   }
 
-  private static String chooseInputFile(String metaDataCandidate) {
-    MetaData metaData = MetaData.valueOf(metaDataCandidate);
+  private static String chooseInputFile( MetaData metaData) {
+    //MetaData metaData = MetaData.valueOf(metaDataCandidate);
     String parameter = switch (metaData) {
       case ADULT: yield  "inputAdultM.xml"; //for all literals without metadata
       case MALE: yield "inputAdultM.xml";
       case FEMALE: yield "inputAdultF.xml";
       case NEW_BORN: yield "inputNewBorn.xml";
+      case OBS: yield "inputAdultF_OBS.xml";
+      case URG: yield "inputAdultM.xml";
       default:
         throw new IllegalStateException("Unexpected value: " + metaData);
     };
@@ -218,8 +230,8 @@ public class Different {
     ADULT("_Age_adult"),
     MALE("_Sex_male"),
     FEMALE("_Sex_female"),
-    EPISODE_TYPE1("_obs"),
-    EPISODE_TYPE2("_ucias");
+    OBS("_obs"),
+    URG("_ucias");
     private String metadata;
     MetaData(String metadata) {
       this.metadata = metadata;
