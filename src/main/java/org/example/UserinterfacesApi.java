@@ -218,6 +218,37 @@ public class UserinterfacesApi {
 
     return client.newCall(request).execute().body().string();
   }
+  @SneakyThrows
+  public String searchForLiteral(String literal) {
+    OkHttpClient client = new OkHttpClient();
+
+    Request request = new Request.Builder()
+
+        .url("http://localhost:8089/search/osc-results/es/DIAGNOSIS?input=" + literal +"&isOsc=true&caseId=" + this.caseId + "&aimDisabled=false")
+        .header("Accept", "application/json, text/plain, */*")
+        .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
+        .header("Connection", "keep-alive")
+        .header("Origin", "http://localhost:9100")
+        .header("Referer", "http://localhost:9100/")
+        .header("Sec-Fetch-Dest", "empty")
+        .header("Sec-Fetch-Mode", "cors")
+        .header("Sec-Fetch-Site", "same-site")
+        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+        .header("caseId", "d2bd0ce0-8e71-3db6-88e6-589191de662c")
+        .header("language", "SPANISH")
+        .header("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
+        .header("sec-ch-ua-mobile", "?0")
+        .header("sec-ch-ua-platform", "\"Windows\"")
+        .build();
+
+    try (Response response = client.newCall(request).execute()) {
+      if (!response.isSuccessful()) {
+        throw new IOException("Unexpected code " + response);
+      } else {
+        return response.body().string();
+      }
+    }
+  }
 
   public String updateWithStringUtils(String result) {
 

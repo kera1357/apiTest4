@@ -15,7 +15,10 @@ public class Main {
     System.out.println();
     //CesTests.run();
 
-    E360Tests.run();
+    //E360Tests.run();
+
+    new Different().run();
+
   }
 
 

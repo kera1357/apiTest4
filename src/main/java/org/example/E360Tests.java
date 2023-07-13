@@ -34,7 +34,7 @@ public class E360Tests {
   @SneakyThrows
   private static UserinterfacesApi test_auto_coding() {
     //==== given =========
-    String episodeId = "cc_at52";
+    String episodeId = "cc_at55";
     Integration integration = new Integration();
     ArrayList<String> hl7Array = integration.readHl7File("caseCleaning1.hl7", episodeId);
     String path = "D:\\testProjects\\TestsWithoutIntegration\\src\\main\\resources\\tempCC.hl7";
@@ -42,7 +42,6 @@ public class E360Tests {
 
     Terminal terminal = new Terminal();
     terminal.runImportAndAutoCoding(path,episodeId);
-    System.out.println("check assertions");
 
     UserinterfacesApi userinterfacesApi = new UserinterfacesApi(episodeId);
 

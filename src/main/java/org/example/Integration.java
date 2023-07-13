@@ -75,7 +75,7 @@ public class Integration {
     InputStream fileFromResourceAsStream = getFileFromResourceAsStream(fileName);
     ArrayList<String> hl7Array = new ArrayList<>();
     try {
-      BufferedReader my_Reader = new BufferedReader(new InputStreamReader(fileFromResourceAsStream, "UTF-8"));
+      BufferedReader my_Reader = new BufferedReader(new InputStreamReader(fileFromResourceAsStream, "ISO-8859-1"));
       String line = "";
       while((line = my_Reader.readLine()) != null)
       {
@@ -96,7 +96,7 @@ public class Integration {
  This reading method enables reading file in every circumstances:
  Embedded in JAR, using IDEA, and unit test
   */
-  private InputStream getFileFromResourceAsStream(String fileName) {
+  public InputStream getFileFromResourceAsStream(String fileName) {
     ClassLoader classLoader = getClass().getClassLoader();
     InputStream inputStream = classLoader.getResourceAsStream(fileName);
     if (inputStream == null) {

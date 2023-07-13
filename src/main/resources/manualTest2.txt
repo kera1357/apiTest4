@@ -1,0 +1,65 @@
+_Age_newborn Galactorrea
+Politraumatismo leve por accidente de tráfico
+_Age_adult Llanto excesivo
+S. catarral
+Epilepsia tonico clonico generalizadas que complican parto
+Fractura aplastamiento de L2 sin afectación del muro posterior
+Picadura de insecto sin datos de alarma en el momento actual
+Agresión por empujón desde un lugar elevado
+_2021 Probable neumonía por Covid
+En 2012 intervenida de catarata de ojo derecho
+_ucias Bradicardia materna
+Probable rotura fibrilar
+_2021 Fibrilación auricular persistente
+SOH
+Llaga en la boca
+_Age_adult Anemia neonatal
+Infarto
+DLP
+Llaga de boca
+Postvacunación covid 19
+DM tipo 2
+Gestante en la semana 10 con crisis epilépticas parciales complejas resistentes al tratamiento de 40 minutos
+Rotura fibrilar en proceso
+Rotura fibrilar
+_2021 Disnea secuela de covid
+_2021 Síndrome inflamatorio multisistémico con sospecha de infección por COVID
+Postvacunal covid 19
+Anillo
+Postvacuna covid 19
+Hematoma subgaleal
+_ucias Diabetes gestacional
+_2021 SIM con sospecha de infección por COVID
+Pseudocrisis
+_Age_newborn TEP
+TCE por accidente de tráfico
+Caída
+_ucias 37 sg
+Agresión
+Se descarta afectación pulmonar por coronavirus
+_ucias 4 semanas de gestación
+Carbamazepina _intoxicación
+Acenocumarol _intoxicación
+Anticoagulante oral _intoxicación
+Anticoagulantes orales _intoxicación
+Simtron _intoxicación
+Sintrom _intoxicación
+Sintron _intoxicación
+Warfarina _intoxicación
+_2021 Historia de enfermedad por coronavirus 2019
+_2021 Disnea como secuela de covid
+IRC
+APP
+Secuela
+Seudocrisis
+_obs APP
+Intoxicación medicamentosa
+Reacción alérgica medicamentosa
+Llaga bucal
+Historia de faquectomía
+EPOC reagudizado por infección respiratoria
+Virasis
+_Sex_male Parto
+Historia FACO
+Fx base 5º MTT pie D
+IRA

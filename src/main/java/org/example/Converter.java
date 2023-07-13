@@ -29,16 +29,20 @@ public class Converter {
        crs = (Crs) jaxbUnmarshaller.unmarshal(reader);
       //CodeXml i10Dxp = crs.getEncounter().getClaim().getI10Dxp();
       CodeXml i10Dxp = new CodeXml();
-      i10Dxp.setValue(allDx.get(0));
+      //i10Dxp.setValue(allDx.get(0));
       crs.getEncounter().getClaim().setI10Dxp(i10Dxp);
       allDx.remove(0);
       //List<CodeDx> i10Dx = crs.getEncounter().getClaim().getI10Dx();
       List<CodeDx> i10Dx = new ArrayList<>();
       for (String value : allDx) {
-        CodeDx codeDx = new CodeDx();
-        codeDx.setValue(value);
-        i10Dx.add(codeDx);
+//        CodeDx codeDx = new CodeDx();
+//        codeDx.setValue(value);
+//        i10Dx.add(codeDx);
       }
+      CodeDx codeDx = new CodeDx();
+      codeDx.setValue("I12.0");
+
+
       crs.getEncounter().getClaim().setI10Dx(i10Dx);
     } catch (JAXBException e) {
       e.printStackTrace();
