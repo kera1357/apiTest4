@@ -30,6 +30,7 @@ public class CsvBean {
   private String ms4;
 
   public MetaData metadata;
+  public String interactiveCave = "";
 
   @Override
   public String toString() {

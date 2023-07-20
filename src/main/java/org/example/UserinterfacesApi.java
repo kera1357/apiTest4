@@ -223,7 +223,7 @@ public class UserinterfacesApi {
     OkHttpClient client = new OkHttpClient();
 
     Request request = new Request.Builder()
-
+//PROCEDURE //DIAGNOSIS
         .url("http://localhost:8089/search/osc-results/es/DIAGNOSIS?input=" + literal +"&isOsc=true&caseId=" + this.caseId + "&aimDisabled=false")
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
