@@ -17,7 +17,7 @@ public class Main {
 
     //E360Tests.run();
 
-    new Different().run();
+    new ManualTests().run();
 
   }
 

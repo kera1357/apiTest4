@@ -19,13 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.Assertions;
 
-public class Different {
+public class ManualTests {
 
   @SneakyThrows
   void run() {
@@ -96,7 +94,7 @@ public class Different {
 
   @SneakyThrows
   private List<CsvBean> readCsvFileToBean() {
-    URL fileUrl = Different.class.getClassLoader().getResource("manualTest1.csv");
+    URL fileUrl = ManualTests.class.getClassLoader().getResource("manualTest1.csv");
     return new CsvToBeanBuilder(new FileReader(fileUrl.getFile()))
         .withType(CsvBean.class)
         .build()

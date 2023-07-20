@@ -1,10 +1,7 @@
 package org.example;
 
 import com.opencsv.bean.CsvBindByPosition;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.example.Different.MetaData;
+import org.example.ManualTests.MetaData;
 
 //@Data
 //@AllArgsConstructor
