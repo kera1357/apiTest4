@@ -28,23 +28,12 @@
     <DMV>10</DMV>
     <CLAIM>
       <I10DXP>
-        <VALUE>I10</VALUE>
+        <VALUE>W19.XXXA</VALUE>
       </I10DXP>
       <I10DX>
-        <VALUE>N18.5</VALUE>
+        <VALUE>T14.90XA</VALUE>
       </I10DX>
-      <I10DX>
-        <VALUE>N18.30</VALUE>
-        <POA>N</POA>
-      </I10DX>
-      <I10DX>
-        <VALUE>N18.5</VALUE>
-        <POA>N</POA>
-      </I10DX>
-      <I10DX>
-        <VALUE>O35.6XX0</VALUE>
-        <POA>N</POA>
-      </I10DX>
+
       <I10PR>
         <VALUE>0DJD8ZZ</VALUE>
         <DATE>2021-01-31T14:30</DATE>

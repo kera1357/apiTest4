@@ -28,9 +28,9 @@ public class UserinterfacesApi {
     this.episodeId = episodeId;
   }
 
-  public void openApplication(String inputName) {
+  public void openApplication(String inputFile) {
     Integration integration = new Integration();
-    input = integration.readXmlFile(inputName);
+    input = integration.readXmlFile(inputFile);
     input = StringUtils.replace(input, "placeHolder", episodeId);
     Map<String, String> linksMap = integration.initApp(input);
     Links links = new Links(linksMap.get("resultLink"), linksMap.get("applicationLink"),
@@ -83,7 +83,7 @@ public class UserinterfacesApi {
     MediaType mediaType = MediaType.parse("application/json");
     RequestBody body = RequestBody.create(mediaType, "{}");
     Request request = new Request.Builder()
-        .url("http://localhost:8089/integration/ACCEPT/cases/" + caseId)
+        .url("http://" + Integration.DOMAIN + ":8089/integration/ACCEPT/cases/" + caseId)
         .method("POST", body)
         .addHeader("sec-ch-ua",
             "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
@@ -110,7 +110,7 @@ public class UserinterfacesApi {
     MediaType mediaType = MediaType.parse("application/json");
     RequestBody body = RequestBody.create(mediaType, "{}");
     Request request = new Request.Builder()
-        .url("http://localhost:8089/integration/CANCEL/cases/" + caseId)
+        .url("http://" + Integration.DOMAIN + ":8089/integration/CANCEL/cases/" + caseId)
         .method("POST", body)
         .addHeader("sec-ch-ua",
             "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
@@ -130,14 +130,14 @@ public class UserinterfacesApi {
   }
 
   @SneakyThrows
-  public Response switchOnRuleRedBlack() {
+  public String switchOnRuleRedBlack() {
     OkHttpClient client = new OkHttpClient().newBuilder()
         .build();
     MediaType mediaType = MediaType.parse("application/json");
     RequestBody body = RequestBody.create(mediaType, "{\"caseId\":\"" + this.caseId
         + "\",\"applyRule\":{\"activated\":true,\"comment\":\"Reglas de mayor grado de especificidad. FUNCIONA\",\"triggerCodes\":[\"N18.5\",\"N18.30\"],\"stopCodes\":[],\"addedCodes\":[],\"removedCodes\":[\"N18.30\"],\"dischargeYear\":0,\"ruleNumber\":\"\",\"interferingWarning\":\"\",\"clickable\":true}}");
     Request request = new Request.Builder()
-        .url("http://localhost:8089/case/apply-rule")
+        .url("http://" + Integration.DOMAIN + ":8089/case/apply-rule")
         .method("POST", body)
         .addHeader("sec-ch-ua",
             "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
@@ -153,7 +153,88 @@ public class UserinterfacesApi {
         .addHeader("Sec-Fetch-Mode", "cors")
         .addHeader("Sec-Fetch-Dest", "empty")
         .build();
-    return client.newCall(request).execute();
+    return client.newCall(request).execute().body().string();
+  }
+  @SneakyThrows
+  public String switchOnBG() {
+    OkHttpClient client = new OkHttpClient().newBuilder()
+        .build();
+    MediaType mediaType = MediaType.parse("application/json");
+    RequestBody body = RequestBody.create(mediaType, "{\"caseId\":\"" + this.caseId
+        + "\",\"applyRule\":{\"activated\":true,\"comment\":\"AÃ±ade cÃ³digo de historia de radiaciÃ³n terapÃ©utica\",\"triggerCodes\":[\"O35.6XX0\"],\"stopCodes\":[\"Z92.3\"],\"addedCodes\":[\"Z92.3\"],\"removedCodes\":[],\"dischargeYear\":0,\"ruleNumber\":\"\",\"interferingWarning\":\"\",\"clickable\":true}}");
+
+    Request request = new Request.Builder()
+        .url("http://" + Integration.DOMAIN + ":8089/case/apply-rule")
+        .method("POST", body)
+        .addHeader("sec-ch-ua",
+            "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
+        .addHeader("language", "SPANISH")
+        .addHeader("caseId", "9c593304-4fba-3281-a188-c6083107b69a")
+        .addHeader("sec-ch-ua-mobile", "?0")
+        .addHeader("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+        .addHeader("Content-Type", "application/json")
+        .addHeader("Accept", "application/json, text/plain, */*")
+        .addHeader("sec-ch-ua-platform", "\"Windows\"")
+        .addHeader("Sec-Fetch-Site", "same-site")
+        .addHeader("Sec-Fetch-Mode", "cors")
+        .addHeader("Sec-Fetch-Dest", "empty")
+        .build();
+    return client.newCall(request).execute().body().string();
+  }
+  @SneakyThrows
+  public String switchOnRBG() {
+    OkHttpClient client = new OkHttpClient().newBuilder()
+        .build();
+    MediaType mediaType = MediaType.parse("application/json");
+    RequestBody body = RequestBody.create(mediaType, "{\"caseId\":\"" + this.caseId
+        + "\",\"applyRule\":{\"activated\":true,\"comment\":\"Regla de relaciÃ³n causal de cÃ³digos. FUNCIONA\",\"triggerCodes\":[\"I10\",\"N18.5\"],\"stopCodes\":[\"I50.*\",\"I09\\\\.81\"],\"addedCodes\":[\"I12.0\"],\"removedCodes\":[\"I10\"],\"dischargeYear\":0,\"ruleNumber\":\"\",\"interferingWarning\":\"\",\"clickable\":true}}");
+
+    Request request = new Request.Builder()
+        .url("http://" + Integration.DOMAIN + ":8089/case/apply-rule")
+        .method("POST", body)
+        .addHeader("sec-ch-ua",
+            "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
+        .addHeader("language", "SPANISH")
+        .addHeader("caseId", "9c593304-4fba-3281-a188-c6083107b69a")
+        .addHeader("sec-ch-ua-mobile", "?0")
+        .addHeader("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+        .addHeader("Content-Type", "application/json")
+        .addHeader("Accept", "application/json, text/plain, */*")
+        .addHeader("sec-ch-ua-platform", "\"Windows\"")
+        .addHeader("Sec-Fetch-Site", "same-site")
+        .addHeader("Sec-Fetch-Mode", "cors")
+        .addHeader("Sec-Fetch-Dest", "empty")
+        .build();
+    return client.newCall(request).execute().body().string();
+  }
+  @SneakyThrows
+  public String switchOffRBG() {
+    OkHttpClient client = new OkHttpClient().newBuilder()
+        .build();
+    MediaType mediaType = MediaType.parse("application/json");
+    RequestBody body = RequestBody.create(mediaType, "{\"caseId\":\"" + this.caseId
+        + "\",\"applyRule\":{\"activated\":false,\"comment\":\"Regla de relaciÃ³n causal de cÃ³digos. FUNCIONA\",\"triggerCodes\":[\"I10\",\"N18.5\"],\"stopCodes\":[\"I50.*\",\"I09\\\\.81\"],\"addedCodes\":[\"I12.0\"],\"removedCodes\":[\"I10\"],\"dischargeYear\":0,\"ruleNumber\":\"\",\"interferingWarning\":\"\",\"clickable\":true}}");
+
+    Request request = new Request.Builder()
+        .url("http://" + Integration.DOMAIN + ":8089/case/apply-rule")
+        .method("POST", body)
+        .addHeader("sec-ch-ua",
+            "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
+        .addHeader("language", "SPANISH")
+        .addHeader("caseId", "9c593304-4fba-3281-a188-c6083107b69a")
+        .addHeader("sec-ch-ua-mobile", "?0")
+        .addHeader("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+        .addHeader("Content-Type", "application/json")
+        .addHeader("Accept", "application/json, text/plain, */*")
+        .addHeader("sec-ch-ua-platform", "\"Windows\"")
+        .addHeader("Sec-Fetch-Site", "same-site")
+        .addHeader("Sec-Fetch-Mode", "cors")
+        .addHeader("Sec-Fetch-Dest", "empty")
+        .build();
+    return client.newCall(request).execute().body().string();
   }
 
   @SneakyThrows
@@ -164,7 +245,7 @@ public class UserinterfacesApi {
     RequestBody body = RequestBody.create(mediaType, "{\"caseId\":\"" + caseId
         + "\",\"applyRule\":{\"activated\":false,\"triggerCodes\":[\"N18.5\",\"N18.30\"],\"stopCodes\":[],\"addedCodes\":[],\"removedCodes\":[\"N18.30\"],\"dischargeYear\":0,\"ruleNumber\":\"#1\",\"interferingWarning\":\"\",\"clickable\":true}}");
     Request request = new Request.Builder()
-        .url("http://localhost:8089/case/apply-rule")
+        .url("http://" + Integration.DOMAIN + ":8089/case/apply-rule")
         .method("POST", body)
         .addHeader("sec-ch-ua",
             "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
@@ -186,8 +267,8 @@ public class UserinterfacesApi {
   /*
         TODO: I need this in order to make initialization of caseInfo complete
         Wlasciwie to mamy na to GET request ale robimy tam w sumie missbrauch bo ladujemy
-        do GET i OkHttpClient nie chce czegos takiego zrobic.
-        Ale w sumie pytanie dlaczgo nie robi init CaseCleaning w wczesniejszmy kroku w openAndValidateCase()
+        do GET body i OkHttpClient nie chce czegos takiego zrobic.
+        Ale w sumie pytanie dlaczgo nie robie init CaseCleaning w wczesniejszmy kroku w openAndValidateCase()
 
    */
   @SneakyThrows
@@ -199,7 +280,7 @@ public class UserinterfacesApi {
     RequestBody body = RequestBody.create(mediaType, "{\"caseId\":\"" + this.caseId
         + "\",\"newCodes\":[{\"code\":\"B01.11\",\"description\":\"Encefalitis y encefalomielitis debidas a varicela\",\"finalCode\":true,\"type\":\"DIAGNOSIS\",\"primaryCode\":false,\"proof\":[],\"errors\":[],\"warnings\":[],\"morphological\":false,\"poa\":\"Y\",\"primaryExternalCause\":0,\"externalCause\":0,\"ftcCode\":false,\"id\":\"94901352-7678-48a2-8b55-1bc72bc41b32\",\"hasQuestions\":false,\"voidCode\":false,\"originalInput\":\"B01.11\"}]}");
     Request request = new Request.Builder()
-        .url("http://localhost:8089/case/code")
+        .url("http://" + Integration.DOMAIN + ":8089/case/code")
         .method("POST", body)
         .addHeader("sec-ch-ua",
             "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
@@ -224,12 +305,12 @@ public class UserinterfacesApi {
 
     Request request = new Request.Builder()
 //PROCEDURE //DIAGNOSIS
-        .url("http://localhost:8089/search/osc-results/es/DIAGNOSIS?input=" + literal +"&isOsc=true&caseId=" + this.caseId + "&aimDisabled=false")
+        .url("http://" + Integration.DOMAIN + ":8089/search/osc-results/es/DIAGNOSIS?input=" + literal +"&isOsc=true&caseId=" + this.caseId + "&aimDisabled=false")
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
         .header("Connection", "keep-alive")
-        .header("Origin", "http://localhost:9100")
-        .header("Referer", "http://localhost:9100/")
+        .header("Origin", "http://" + Integration.DOMAIN + ":9100")
+        .header("Referer", "http://" + Integration.DOMAIN + ":9100/")
         .header("Sec-Fetch-Dest", "empty")
         .header("Sec-Fetch-Mode", "cors")
         .header("Sec-Fetch-Site", "same-site")
@@ -269,7 +350,7 @@ public class UserinterfacesApi {
         + "\",\"newCodes\":[{\"code\":\"N18.5\",\"description\":\"Enfermedad renal crónica, estadio fase 5\",\"finalCode\":false,\"type\":\"DIAGNOSIS\",\"primaryCode\":false,\"proof\":[],\"errors\":[],\"warnings\":[],\"affectDrgFlag\":\"0\",\"morphological\":false,\"poa\":\"Y\",\"rom\":\"2\",\"soi\":\"1\",\"primaryExternalCause\":0,\"externalCause\":0,\"ftcCode\":false,\"id\":\"18aad7be-c8cb-43d0-ae7a-f70ead67d17d\",\"hasQuestions\":false,\"codeAggrId\":\"18aad7be-c8cb-43d0-ae7a-f70ead67d17d\",\"voidCode\":false}]}";
     RequestBody body = RequestBody.create(mediaType, requestContent);
     Request request = new Request.Builder()
-        .url("http://localhost:8089/case/code")
+        .url("http://" + Integration.DOMAIN + ":8089/case/code")
         .method("DELETE", body)
         .addHeader("sec-ch-ua",
             "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
@@ -297,14 +378,44 @@ public class UserinterfacesApi {
     RequestBody body = RequestBody.create(mediaType, contentWithCaseId);
 
     Request request = new Request.Builder()
-        .url("http://localhost:8089/case/code")
+        .url("http://" + Integration.DOMAIN + ":8089/case/code")
         .delete(body)
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
         .header("Connection", "keep-alive")
         .header("Content-Type", "application/json")
-        .header("Origin", "http://localhost:9100")
-        .header("Referer", "http://localhost:9100/")
+        .header("Origin", "http://" + Integration.DOMAIN + ":9100")
+        .header("Referer", "http://" + Integration.DOMAIN + ":9100/")
+        .header("Sec-Fetch-Dest", "empty")
+        .header("Sec-Fetch-Mode", "cors")
+        .header("Sec-Fetch-Site", "same-site")
+        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+        .header("caseId", "6be9d170-d4fd-34f4-aae8-46837670fb9d")
+        .header("language", "SPANISH")
+        .header("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
+        .header("sec-ch-ua-mobile", "?0")
+        .header("sec-ch-ua-platform", "\"Windows\"")
+        .build();
+    return client.newCall(request).execute().body().string();
+  }
+  @SneakyThrows
+  public String removeCode(String code) {
+    OkHttpClient client = new OkHttpClient();
+    String content = "{\"caseId\":\"toReplaceCaseId\",\"newCodes\":[{\"code\":\"codeToReplace\",\"description\":\"Traumatismo, no especificado, contacto inicial\",\"finalCode\":true,\"type\":\"DIAGNOSIS\",\"primaryCode\":true,\"proof\":[],\"errors\":[],\"warnings\":[],\"affectDrgFlag\":\"3\",\"originalInput\":\"caida\",\"certainty\":{\"certainPositions\":{\"position\":[]},\"uncertainPositions\":{\"position\":[]}},\"morphological\":false,\"poa\":\"Y\",\"rom\":\"P\",\"soi\":\"P\",\"primaryExternalCause\":0,\"externalCause\":0,\"ftcCode\":false,\"id\":\"977610f4-6194-48ad-ad82-c1d86325ac54\",\"hasQuestions\":false,\"voidCode\":false}]}";
+    String contentWithCaseId = content.replace("toReplaceCaseId", this.caseId).replace("codeToReplace", code);
+
+    MediaType mediaType = MediaType.parse("application/json");
+    RequestBody body = RequestBody.create(mediaType, contentWithCaseId);
+
+    Request request = new Request.Builder()
+        .url("http://" + Integration.DOMAIN + ":8089/case/code")
+        .delete(body)
+        .header("Accept", "application/json, text/plain, */*")
+        .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
+        .header("Connection", "keep-alive")
+        .header("Content-Type", "application/json")
+        .header("Origin", "http://" + Integration.DOMAIN + ":9100")
+        .header("Referer", "http://" + Integration.DOMAIN + ":9100/")
         .header("Sec-Fetch-Dest", "empty")
         .header("Sec-Fetch-Mode", "cors")
         .header("Sec-Fetch-Site", "same-site")
@@ -328,7 +439,7 @@ public class UserinterfacesApi {
     String newContent = content.replace("REPLACE_CODE", newCode);
     RequestBody body = RequestBody.create(mediaType, newContent);
     Request request = new Request.Builder()
-        .url("http://localhost:8089/case/code")
+        .url("http://" + Integration.DOMAIN + ":8089/case/code")
         .method("POST", body)
         .addHeader("sec-ch-ua",
             "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
@@ -404,7 +515,8 @@ public class UserinterfacesApi {
 
     Request request = new Request.Builder()
         .url(
-            "http://localhost:8089/search/osc-results/es/DIAGNOSIS?input=caida&isOsc=true&caseId=" + this.caseId + "&aimDisabled=false")
+            "http://" + Integration.DOMAIN
+                + ":8089/search/osc-results/es/DIAGNOSIS?input=caida&isOsc=true&caseId=" + this.caseId + "&aimDisabled=false")
         .header("sec-ch-ua",
             "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
         .header("Accept", "application/json, text/plain, */*")
@@ -426,12 +538,13 @@ public class UserinterfacesApi {
     OkHttpClient client = new OkHttpClient();
 
     Request request = new Request.Builder()
-        .url("http://localhost:8089/search/osc-results/es/DIAGNOSIS?input=caida&isOsc=true&caseId=" + this.caseId + "&aimDisabled=false")
+        .url("http://" + Integration.DOMAIN
+            + ":8089/search/osc-results/es/DIAGNOSIS?input=caida&isOsc=true&caseId=" + this.caseId + "&aimDisabled=false")
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
         .header("Connection", "keep-alive")
-        .header("Origin", "http://localhost:9100")
-        .header("Referer", "http://localhost:9100/")
+        .header("Origin", "http://" + Integration.DOMAIN + ":9100")
+        .header("Referer", "http://" + Integration.DOMAIN + ":9100/")
         .header("Sec-Fetch-Dest", "empty")
         .header("Sec-Fetch-Mode", "cors")
         .header("Sec-Fetch-Site", "same-site")
@@ -451,14 +564,14 @@ public class UserinterfacesApi {
     RequestBody body = RequestBody.create(mediaType, contentWithCaseId);
 
     Request request2 = new Request.Builder()
-        .url("http://localhost:8089/case/code")
+        .url("http://" + Integration.DOMAIN + ":8089/case/code")
         .post(body)
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
         .header("Connection", "keep-alive")
         .header("Content-Type", "application/json")
-        .header("Origin", "http://localhost:9100")
-        .header("Referer", "http://localhost:9100/")
+        .header("Origin", "http://" + Integration.DOMAIN + ":9100")
+        .header("Referer", "http://" + Integration.DOMAIN + ":9100/")
         .header("Sec-Fetch-Dest", "empty")
         .header("Sec-Fetch-Mode", "cors")
         .header("Sec-Fetch-Site", "same-site")
@@ -483,14 +596,14 @@ public class UserinterfacesApi {
     RequestBody body = RequestBody.create(mediaType, contentWithCaseId);
 
     Request request = new Request.Builder()
-        .url("http://localhost:8089/case/ftc/annotations/delete")
+        .url("http://" + Integration.DOMAIN + ":8089/case/ftc/annotations/delete")
         .post(body)
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
         .header("Connection", "keep-alive")
         .header("Content-Type", "application/json")
-        .header("Origin", "http://localhost:9100")
-        .header("Referer", "http://localhost:9100/")
+        .header("Origin", "http://" + Integration.DOMAIN + ":9100")
+        .header("Referer", "http://" + Integration.DOMAIN + ":9100/")
         .header("Sec-Fetch-Dest", "empty")
         .header("Sec-Fetch-Mode", "cors")
         .header("Sec-Fetch-Site", "same-site")
@@ -515,14 +628,14 @@ public class UserinterfacesApi {
     RequestBody body = RequestBody.create(mediaType, contentWithCaseId);
 
     Request request = new Request.Builder()
-        .url("http://localhost:8089/case/code")
+        .url("http://" + Integration.DOMAIN + ":8089/case/code")
         .post(body)
         .header("Accept", "application/json, text/plain, */*")
         .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
         .header("Connection", "keep-alive")
         .header("Content-Type", "application/json")
-        .header("Origin", "http://localhost:9100")
-        .header("Referer", "http://localhost:9100/")
+        .header("Origin", "http://" + Integration.DOMAIN + ":9100")
+        .header("Referer", "http://" + Integration.DOMAIN + ":9100/")
         .header("Sec-Fetch-Dest", "empty")
         .header("Sec-Fetch-Mode", "cors")
         .header("Sec-Fetch-Site", "same-site")

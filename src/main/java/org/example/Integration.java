@@ -21,6 +21,7 @@ import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 
 public class Integration {
+  //public static final String DOMAIN = "169.4.121.129";
   public static final String DOMAIN = "localhost";
 
   @SneakyThrows
@@ -45,7 +46,7 @@ public class Integration {
         .build();
     HttpRequest request = HttpRequest.newBuilder()
         .GET()
-        .uri(URI.create("http://localhost:8089/integration/result?caseId=" + caseId ))
+        .uri(URI.create("http://" + DOMAIN + ":8089/integration/result?caseId=" + caseId ))
         .setHeader("User-Agent", "Java 11 HttpClient Bot")
         .timeout(Duration.ofSeconds(timeOutSeconds))
         .build();

@@ -35,8 +35,6 @@ public class ManualTests {
 //    ArrayList<String> input = transformInput2(inputRaw);
 
     test_response_on_search(csvBeans);
-
-
   }
 
   private void extractMetadata(List<CsvBean> csvBeans) {
