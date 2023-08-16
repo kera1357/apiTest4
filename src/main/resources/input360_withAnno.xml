@@ -35,8 +35,26 @@
 
     <CLAIM>
       <I10DXP>
-        <VALUE>N18.5</VALUE>
+        <VALUE>T07.XXXA</VALUE>
       </I10DXP>
+      <I10DX>
+        <VALUE>V89.2XXA</VALUE>
+      </I10DX>
+      <I10DX>
+        <VALUE>Y92.410</VALUE>
+      </I10DX>
+      <I10DX>
+        <VALUE>N18.5</VALUE>
+      </I10DX>
+      <I10DX>
+        <VALUE>T30.0</VALUE>
+      </I10DX>
+      <I10DX>
+        <VALUE>B35.9</VALUE>
+      </I10DX>
+      <I10DX>
+        <VALUE>I12.0</VALUE>
+      </I10DX>
 
     </CLAIM>
 

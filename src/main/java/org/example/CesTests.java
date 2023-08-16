@@ -8,13 +8,13 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 
-public class CesTests {
+public class CesTests extends TestBase {
 
   public static void run() {
-    UserinterfacesApi userinterfacesApi = getUserinterfacesApi("input.xml");
-    test_switchOnRuleRedBlack(userinterfacesApi);
-    test_switchOffRedBlack(userinterfacesApi);
-    test_removeBlackManually(userinterfacesApi);
+    UserinterfacesApi ui = getUserinterfacesApi("input.xml");
+    test_switchOnRuleRedBlack(ui);
+    test_switchOffRedBlack(ui);
+    test_removeBlackManually(ui);
 
     UserinterfacesApi userinterfacesApi2 = getUserinterfacesApi("input.xml");
     test_state_first_off_sub_on_cancel(userinterfacesApi2);
@@ -34,16 +34,33 @@ public class CesTests {
     UserinterfacesApi userinterfacesApi6 = getUserinterfacesApi("input5.xml");
     when_remove_then_rule_is_found(userinterfacesApi6);
 
+    UserinterfacesApi ui7 = getUserinterfacesApi("input.xml");
+    when_adding_code_already_used_in_cc(ui7);
+    when_replace_code_from_applied_rule(ui7);
+
   }
 
-
-  @NotNull
-  private static UserinterfacesApi getUserinterfacesApi(String inputName) {
-    String generatedString = RandomStringUtils.randomAlphabetic(10);
-    UserinterfacesApi userinterfacesApi = new UserinterfacesApi(generatedString);
-    userinterfacesApi.openApplication(inputName);
-    return userinterfacesApi;
+  private static void when_replace_code_from_applied_rule(UserinterfacesApi ui) {
+    ui.openApplicationNext();
+    String replaceCode = ui.replaceCode("N18.1");
+    ui.closeWithCancel();
+    codeIsInDiagList(replaceCode,"N18.1");
+    codeIsNotInDiagList(replaceCode, "N18.5");
+    codeIsInDiagList(replaceCode,"I10");
+    System.out.println();
   }
+
+  private static void when_adding_code_already_used_in_cc(UserinterfacesApi ui) {
+    ui.getCurrentState();
+    ui.switchOnRBG();
+    String response = ui.searchForLiteral("I10");
+    ui.closeWithCancel();
+    String textPath = "$.caseCleaningMsg";
+    String text =  JsonPath.read(response, textPath);
+    Assertions.assertTrue(text.contains("Hay una regla que contiene"));
+
+  }
+
   private static void test_state_first_off_sub_on_sub_off_cancel(UserinterfacesApi userinterfacesApi) {
     //given
     test_switchOnRuleRedBlack(userinterfacesApi);

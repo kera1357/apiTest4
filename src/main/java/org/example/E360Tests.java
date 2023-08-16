@@ -1,113 +1,113 @@
 package org.example;
 
+import com.jayway.jsonpath.Criteria;
+import com.jayway.jsonpath.Filter;
 import com.jayway.jsonpath.JsonPath;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 
-public class E360Tests {
+public class E360Tests extends TestBase{
 
   public static void run() {
     //case withOUT applied rules
-    UserinterfacesApi userinterfaceApi = new UserinterfacesApi("cc10");
-    userinterfaceApi.openApplication("input360.xml");
+    UserinterfacesApi ui = new UserinterfacesApi("cc10");
+    ui.openApplication("input360.xml");
 
-    mark_and_code(userinterfaceApi);
-    delete_annotation(userinterfaceApi);
-//
-//    test_delete_annotation_depended(userinterfacesApi);
+//    workFlow_of_actions(ui);
+//    when_remove_anno_with_RCode(ui);
 
-  }
+    UserinterfacesApi ui2 = new UserinterfacesApi("cct2");
+    ui2.openApplication("input360_withAnno.xml");
+    when_remove_anno_with_BCode_dependedAnno(ui2);
 
-
-  private static void delete_annotation(UserinterfacesApi userinterfacesApi) {
-    //given: case with accepted cc-rules and annotation
-
-    //when
-    //userinterfacesApi.openApplicationNext();
-    String currentState = userinterfacesApi.getCurrentState();
-    String pathToAnnoId = "$.doccoderData.annotations[1].id";
-    String annoId = JsonPath.read(currentState, pathToAnnoId);
-    String s = userinterfacesApi.deleteAnno(annoId);
-    String currentState2 = userinterfacesApi.getCurrentState();
-    userinterfacesApi.closeWithCancel();
-
-   //then
-    //anno is removed
-    String pathToAllAnnotation = "$.doccoderData.annotations";
-    List<String> allAnno = JsonPath.read(currentState2, pathToAllAnnotation);
-    String pathToAllCodeType = "$.doccoderData.annotations[*].codeType";
-    List<String> allCodeType = JsonPath.read(currentState2, pathToAllCodeType);
-    List<String> diagnosisAnno = allCodeType.stream().filter(e -> e.equals("DIAGNOSIS")).toList();
-    Assertions.assertTrue(diagnosisAnno.size() == 6);
-
-    // CC rule is deleted not reverted!
-    String allActivatedFlags = "$.caseCleaningRules.dxCodeCleanings[*].activated";
-    List<Boolean> activated = JsonPath.read(currentState2, allActivatedFlags);
-    //thera are only 2 cc-rules
-    Assertions.assertTrue(activated.size() == 2);
-    //in diagnosisList there is no I12.0
-    String pathToDx = "$.diagnosisList[*].code";
-    List<String> dxList = JsonPath.read(currentState2, pathToDx);
-    Assertions.assertFalse(dxList.contains("I12.0"));
-
-    //in noReview status there are only 2 codes: N18.30, N18.4
-    String noReviewListPath = "$.doccoderData.noReviewList[*].code";
-    List<String> allCodes = JsonPath.read(currentState2, noReviewListPath);
-    Assertions.assertTrue(allCodes.size() == 2);
-    List<String> noReviewList = List.of("N18.30", "N18.4");
-    Assertions.assertTrue(allCodes.equals(noReviewList));
 
   }
 
-  private static void test_delete_annotation_depended(UserinterfacesApi userinterfacesApi) {
-    //given: case with accepted cc-rules and annotation
+  private static void when_remove_anno_with_BCode_dependedAnno(UserinterfacesApi ui) {
+    String currentState = ui.getCurrentState();
+    String annoId = findAnnoId(currentState, String.valueOf(3));
+    String responseRemoveAnno = ui.removeAnnotation(annoId);
+    ui.closeWithCancel();
+    codeIsNotInDiagList(responseRemoveAnno, "N18.4");
+    codeIsNotInNoReviewList(responseRemoveAnno, "N18.4");
+
+    codeIsInDiagList(responseRemoveAnno, "N18.30");
+    codeIsNotInNoReviewList(responseRemoveAnno, "N18.30");
+  }
+
+  private static void when_remove_anno_with_RCode(UserinterfacesApi ui) {
+    ui.openApplicationNext();
+    String response = ui.markAndCode();
+    String annoId = findAnnoId(response, "0");
+    String s = ui.switchOnRBG();
+    String responseRemoveAnno = ui.removeAnnotation(annoId);
+    codeIsNotInDiagList(responseRemoveAnno, "I10");
+    codeIsNotInNoReviewList(responseRemoveAnno, "I10");
+    ui.closeWithCancel();
+  }
+
+  private static String findAnnoId(String response, String index) {
+    String annoPath = "$.doccoderData.annotations[" + index + "].id";
+    String annoId =  JsonPath.read(response, annoPath);
+    return annoId;
+  }
+
+
+
+  private static void workFlow_of_actions(UserinterfacesApi ui) {
+    //given: cc10 is doc without anno. "hipertension arterial" , free code N18.5
+    ui.getCurrentState();
 
     //when
-    userinterfacesApi.openApplicationNext();
-    String currentState = userinterfacesApi.getCurrentState();
-    String pathToAnnoId = "$.doccoderData.annotations[3].id";
-    String annoId = JsonPath.read(currentState, pathToAnnoId);
-    String s = userinterfacesApi.deleteAnno(annoId);
-    String currentState2 = userinterfacesApi.getCurrentState();
-    userinterfacesApi.closeWithCancel();
-
+    String reply = ui.markAndCode();
     //then
-    //1 anno is removed
-    String pathToAllAnnotation = "$.doccoderData.annotations";
-    List<String> allAnno = JsonPath.read(currentState2, pathToAllAnnotation);
-    String pathToAllCodeType = "$.doccoderData.annotations[*].codeType";
-    List<String> allCodeType = JsonPath.read(currentState2, pathToAllCodeType);
-    List<String> diagnosisAnno = allCodeType.stream().filter(e -> e.equals("DIAGNOSIS")).toList();
-    Assertions.assertTrue(diagnosisAnno.size() == 6);
-    //userinterfacesApi.closeWithAccept();
+    annoIsCreated(reply, "2215ca3d-0116-4200-b000-177c85ae62b5");
+    codeIsInDiagList(reply, "I10");
 
-    //CC rule is deleted not reverted, no N18.4
-    String allActivatedFlags = "$.caseCleaningRules.dxCodeCleanings[*].activated";
-    List<Boolean> activated = JsonPath.read(currentState2, allActivatedFlags);
-    //thera is only one activated rule
-    Assertions.assertTrue(activated.size() == 1);
-    //in diagnosisList there is no N18.4
-    String pathToDx = "$.diagnosisList[*].code";
-    List<String> dxList = JsonPath.read(currentState2, pathToDx);
-    Assertions.assertFalse(dxList.contains("N18.4"));
+    //when
+    String applyResponse = ui.switchOnRBG();
+    //then
+    codeIsInNoReviewList(applyResponse,"I10");
 
-    //depended rule was reverted -> N18.30 is now accepted
-    Assertions.assertTrue(dxList.contains("N18.30"));
+    //when
+    String replyOff = ui.switchOffRBG();
+    //then
+    codeIsInDiagList(replyOff, "I10");
 
+    //when
+    ui.switchOnRBG();
+    String removingResponse = ui.removeCode("N18.5");
+    //then
+    codeIsInDiagList(removingResponse, "I10");
+    codeIsTiedToAnnotation(removingResponse, "I10");
+    codeIsNotInDiagList(removingResponse, "N18.5");
 
+    ui.closeWithCancel();
   }
 
+  private static void codeIsTiedToAnnotation(String reply, String code) {
+    String ftcCodePath = "$.diagnosisList[?].ftcCode";
+    Filter filter =	Filter.filter(Criteria.where("code").eq(code));
+    List<Object> status = JsonPath.read(reply, ftcCodePath, filter);
+    Assertions.assertTrue(status.get(0).toString().equals("true"));
+  }
 
-  private static void mark_and_code(UserinterfacesApi userinterfacesApi) {
-
-    String reply = userinterfacesApi.markAndCode();
-    userinterfacesApi.closeWithCancel();
+  private static void annoIsCreated(String reply, String anno) {
     String sentenceIdPath = "$.doccoderData.annotations[0].anchor[0].sentenceId";
     String sentenceId = JsonPath.read(reply, sentenceIdPath);
-    Assertions.assertTrue(sentenceId.equals("2215ca3d-0116-4200-b000-177c85ae62b5"));
-
-  System.out.printf("");
-
-
+    Assertions.assertTrue(sentenceId.equals(anno));
   }
+
+  private static void codeIsInNoReviewList(String response, String code) {
+    String noReviewPath = "$.doccoderData.noReviewList[*].code";
+    List<String> noReviewCodes = JsonPath.read(response, noReviewPath);
+    Assertions.assertTrue(noReviewCodes.contains(code));
+  }
+  private static void codeIsNotInNoReviewList(String response, String code) {
+    String noReviewPath = "$.doccoderData.noReviewList[*].code";
+    List<String> noReviewCodes = JsonPath.read(response, noReviewPath);
+    Assertions.assertFalse(noReviewCodes.contains(code));
+  }
+
+
 }

@@ -1,9 +1,6 @@
 package org.example;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -209,6 +206,8 @@ public class UserinterfacesApi {
         .build();
     return client.newCall(request).execute().body().string();
   }
+
+
   @SneakyThrows
   public String switchOffRBG() {
     OkHttpClient client = new OkHttpClient().newBuilder()
@@ -585,38 +584,7 @@ public class UserinterfacesApi {
    return clientPost.newCall(request2).execute().body().string();
   }
 
-  @SneakyThrows
-  public String deleteAnno(String annotationId) {
-    OkHttpClient client = new OkHttpClient();
 
-    String content = "{\"caseId\":\"toReplaceCaseId\",\"doccoderOperationData\":{\"deleteAnnotationsRequestDto\":{\"annotationIds\":[\"toReplaceByAnnoId\"]}}}";
-    String temp = content.replace("toReplaceByAnnoId", annotationId);
-    String contentWithCaseId = temp.replace("toReplaceCaseId", this.caseId);
-    MediaType mediaType = MediaType.parse("application/json");
-    RequestBody body = RequestBody.create(mediaType, contentWithCaseId);
-
-    Request request = new Request.Builder()
-        .url("http://" + Integration.DOMAIN + ":8089/case/ftc/annotations/delete")
-        .post(body)
-        .header("Accept", "application/json, text/plain, */*")
-        .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
-        .header("Connection", "keep-alive")
-        .header("Content-Type", "application/json")
-        .header("Origin", "http://" + Integration.DOMAIN + ":9100")
-        .header("Referer", "http://" + Integration.DOMAIN + ":9100/")
-        .header("Sec-Fetch-Dest", "empty")
-        .header("Sec-Fetch-Mode", "cors")
-        .header("Sec-Fetch-Site", "same-site")
-        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
-        .header("caseId", this.caseId)
-        .header("language", "SPANISH")
-        .header("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
-        .header("sec-ch-ua-mobile", "?0")
-        .header("sec-ch-ua-platform", "\"Windows\"")
-        .build();
-
-    return client.newCall(request).execute().body().string();
-  }
 
   @SneakyThrows
   public String markAndCode() {
@@ -640,7 +608,7 @@ public class UserinterfacesApi {
         .header("Sec-Fetch-Mode", "cors")
         .header("Sec-Fetch-Site", "same-site")
         .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
-        .header("caseId", "8ca187c0-f0e9-3f2f-a331-9ed9da35772d")
+        .header("caseId", this.caseId)
         .header("language", "SPANISH")
         .header("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
         .header("sec-ch-ua-mobile", "?0")
@@ -648,4 +616,78 @@ public class UserinterfacesApi {
         .build();
     return client.newCall(request).execute().body().string();
   }
+
+  @SneakyThrows
+  public String removeAnnotation(String annoId) {
+    OkHttpClient client = new OkHttpClient();
+
+    String id = this.caseId;
+    String anno = annoId;
+    String content = "{\"caseId\":\"" + id
+        + "\",\"doccoderOperationData\":{\"deleteAnnotationsRequestDto\":{\"annotationIds\":[\""
+        + anno + "\"]}}}";
+    MediaType mediaType = MediaType.parse("application/json");
+    RequestBody body = RequestBody.create(mediaType, content);
+    Request request = new Request.Builder()
+        .url("http://localhost:8089/case/ftc/annotations/delete")
+        .post(body)
+        .header("Accept", "application/json, text/plain, */*")
+        .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
+        .header("Connection", "keep-alive")
+        .header("Content-Type", "application/json")
+        .header("Origin", "http://localhost:9100")
+        .header("Referer", "http://localhost:9100/")
+        .header("Sec-Fetch-Dest", "empty")
+        .header("Sec-Fetch-Mode", "cors")
+        .header("Sec-Fetch-Site", "same-site")
+        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+        .header("caseId", id)
+        .header("language", "SPANISH")
+        .header("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
+        .header("sec-ch-ua-mobile", "?0")
+        .header("sec-ch-ua-platform", "\"Windows\"")
+        .build();
+
+    return client.newCall(request).execute().body().string();
+  }
+  @SneakyThrows
+  public String replaceCode(String code) {
+
+    OkHttpClient client = new OkHttpClient();
+
+    String codeToReplace = code;
+    String id = this.caseId;
+    String content =
+        "{\"caseId\":\"" + id + "\",\"newCodes\":[{\"code\":\"" + codeToReplace
+            + "\",\"primaryCode\":false,\"description\":\"Enfermedad renal crónica, estadio 1\",\"finalCode\":true,\"poa\":\"Y\",\"type\":\"DIAGNOSIS\",\"proof\":[],\"warnings\":[],\"errors\":[],\"hasQuestions\":false,\"ftcCode\":false,\"codeAggrId\":\"\",\"documentIds\":[],\"originalInput\":\"classification\",\"morphological\":false,\"rom\":\"\",\"soi\":\"\",\"affectDrgFlag\":\"\",\"primaryExternalCause\":0,\"externalCause\":0}],\"oldCode\":{\"code\":\"N18.5\",\"description\":\"Enfermedad renal crónica, estadio fase 5\",\"finalCode\":false,\"type\":\"DIAGNOSIS\",\"primaryCode\":false,\"proof\":[],\"errors\":[],\"warnings\":[],\"affectDrgFlag\":\"0\",\"morphological\":false,\"poa\":\"Y\",\"rom\":\"2\",\"soi\":\"1\",\"primaryExternalCause\":0,\"externalCause\":0,\"ftcCode\":false,\"id\":\"7aca6dde-10b8-43f6-a2a5-8dd8440f8f0d\",\"hasQuestions\":false,\"codeAggrId\":\"7aca6dde-10b8-43f6-a2a5-8dd8440f8f0d\",\"voidCode\":false}}";
+
+    MediaType mediaType = MediaType.parse("application/json");
+    RequestBody body = RequestBody.create(mediaType, content);
+
+    Request request = new Request.Builder()
+        .url("http://localhost:8089/case/code/replace")
+        .put(body)
+        .header("Accept", "application/json, text/plain, */*")
+        .header("Accept-Language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,pl;q=0.6,es;q=0.5")
+        .header("Connection", "keep-alive")
+        .header("Content-Type", "application/json")
+        .header("Origin", "http://localhost:9100")
+        .header("Referer", "http://localhost:9100/")
+        .header("Sec-Fetch-Dest", "empty")
+        .header("Sec-Fetch-Mode", "cors")
+        .header("Sec-Fetch-Site", "same-site")
+        .header("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+        .header("caseId", id)
+        .header("language", "SPANISH")
+        .header("sec-ch-ua",
+            "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
+        .header("sec-ch-ua-mobile", "?0")
+        .header("sec-ch-ua-platform", "\"Windows\"")
+        .build();
+
+    return client.newCall(request).execute().body().string();
+
+  }
+
 }
