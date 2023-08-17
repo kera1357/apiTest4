@@ -11,19 +11,13 @@ import org.junit.jupiter.api.Assertions;
 public class AutoCoding {
 
   public static void run() {
-
-
-
     UserinterfacesApi userinterfacesApi = test_auto_coding();
-
-
   }
-
 
   @SneakyThrows
   private static UserinterfacesApi test_auto_coding() {
     //==== given =========
-    String episodeId = "cc_at55";
+    String episodeId = "cc_at58";
     Integration integration = new Integration();
     ArrayList<String> hl7Array = integration.readHl7File("caseCleaning1.hl7", episodeId);
     String path = "D:\\testProjects\\TestsWithoutIntegration\\src\\main\\resources\\tempCC.hl7";
@@ -43,7 +37,7 @@ public class AutoCoding {
     List<String> allDx = JsonPath.read(allCodes1, pathToAllDx);
 
     Converter converter = new Converter();
-    String xml = converter.convertXmlToObject(allDx);
+    String xml = converter.convertXmlToObject(allDx, episodeId);
 
     //==== when =========
     userinterfacesApi.openApplicationWithUpdatedInput(xml);
@@ -55,7 +49,7 @@ public class AutoCoding {
     //then
     String allActivatedFlags = "$.caseCleaningRules.dxCodeCleanings[*].activated";
     List<Boolean> activated = JsonPath.read(currentState, allActivatedFlags);
-    //thera are only 3 cc-rules
+    //there are only 3 cc-rules
     Assertions.assertTrue(activated.size() == 3);
     //3 rules are applied
     List<Boolean> allActivated = activated.stream().filter(b -> b == true).toList();

@@ -16,7 +16,7 @@ import org.example.xml.Crs;
 
 public class Converter {
 
-  public String convertXmlToObject(List<String> allDx) {
+  public String convertXmlToObject(List<String> allDx, String episodeId) {
     Integration integration = new Integration();
     String xmlAsString = integration.readXmlFile("input360.xml");
     JAXBContext jaxbContext = null;
@@ -35,15 +35,16 @@ public class Converter {
       //List<CodeDx> i10Dx = crs.getEncounter().getClaim().getI10Dx();
       List<CodeDx> i10Dx = new ArrayList<>();
       for (String value : allDx) {
-//        CodeDx codeDx = new CodeDx();
-//        codeDx.setValue(value);
-//        i10Dx.add(codeDx);
+        CodeDx codeDx = new CodeDx();
+        codeDx.setValue(value);
+        i10Dx.add(codeDx);
       }
       CodeDx codeDx = new CodeDx();
       codeDx.setValue("I12.0");
 
 
       crs.getEncounter().getClaim().setI10Dx(i10Dx);
+      crs.getEncounter().setEpisodeId(episodeId);
     } catch (JAXBException e) {
       e.printStackTrace();
     }

@@ -31,7 +31,7 @@ public class Terminal {
     while ((line = reader.readLine()) != null) {
       System.out.println(line);
       if(line.contains("Message sent")) {
-        System.out.println("runMllpReceiver ready");
+        System.out.println("runMllpReceiver done");
         reader.close();
         process.destroyForcibly();
         return;

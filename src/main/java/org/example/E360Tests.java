@@ -13,14 +13,27 @@ public class E360Tests extends TestBase{
     UserinterfacesApi ui = new UserinterfacesApi("cc10");
     ui.openApplication("input360.xml");
 
-//    workFlow_of_actions(ui);
-//    when_remove_anno_with_RCode(ui);
+    workFlow_of_actions(ui);
+    when_remove_anno_with_RCode(ui);
 
     UserinterfacesApi ui2 = new UserinterfacesApi("cct2");
     ui2.openApplication("input360_withAnno.xml");
     when_remove_anno_with_BCode_dependedAnno(ui2);
+    when_remove_code_manual_by_dependent_rules(ui2);
 
 
+  }
+
+  private static void when_remove_code_manual_by_dependent_rules(UserinterfacesApi ui) {
+    //when
+    ui.openApplicationNext();
+    String response = ui.deleteBlackCode();
+    ui.closeWithCancel();
+    //then
+    codeIsNotInDiagList(response,"N18.5");
+    codeIsInDiagList(response, "N18.4");
+    codeIsNotInDiagList(response, "I12.0");
+    codeIsInDiagList(response, "I10");
   }
 
   private static void when_remove_anno_with_BCode_dependedAnno(UserinterfacesApi ui) {

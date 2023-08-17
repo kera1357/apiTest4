@@ -13,13 +13,18 @@ public class Main {
 //    converter.convertXmlToObject();
     //String s = converter.prepareXmlString(crs);
     System.out.println();
-    CesTests.run();
-//    CodeOrder.run();
-    //AutoCoding.run();
+    for (int i = 0; i < 1; i++) {
+      System.out.println("interation: " + i );
+//      CesTests.run();
+//      CodeOrder.run();
+//      E360Tests.run();
+      AutoCoding.run();
 
-//    E360Tests.run();
 
-    //new ManualTests().run();
+
+      //new ManualTests().run();
+    }
+
 
   }
 
