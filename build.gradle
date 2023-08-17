@@ -45,6 +45,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
     implementation group: 'com.opencsv', name: 'opencsv', version: '5.7.1'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.7'
 
 
 

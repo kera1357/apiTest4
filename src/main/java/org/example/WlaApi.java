@@ -2,7 +2,6 @@ package org.example;
 
 import com.jayway.jsonpath.JsonPath;
 import java.io.IOException;
-import java.util.List;
 import lombok.SneakyThrows;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -48,30 +47,7 @@ public class WlaApi {
   }
 
   @SneakyThrows
-  public String getAllCodes(String wlaId, String token) {
-    OkHttpClient client = new OkHttpClient().newBuilder()
-        .build();
-    MediaType mediaType = MediaType.parse("text/plain");
-    RequestBody body = RequestBody.create(mediaType, "");
-    Request request = new Request.Builder()
-        .url("http://localhost:9001/api/episodes/details/" + wlaId)
-        .method("GET", null)
-        .addHeader("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"")
-        .addHeader("Accept", "application/json, text/plain, */*")
-        .addHeader("sec-ch-ua-mobile", "?0")
-        .addHeader("Authorization", "bearer " + token)
-        .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
-        .addHeader("sec-ch-ua-platform", "\"Windows\"")
-        .addHeader("Sec-Fetch-Site", "same-site")
-        .addHeader("Sec-Fetch-Mode", "cors")
-        .addHeader("Sec-Fetch-Dest", "empty")
-        .build();
-    String response = client.newCall(request).execute().body().string();
-
-    return response;
-  }
-  @SneakyThrows
-  public  String getAllCodes2(String wlaId, String token) {
+  public  String getAllCodes(String wlaId, String token) {
     OkHttpClient client = new OkHttpClient();
 
     Request request = new Request.Builder()
